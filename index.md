@@ -10,7 +10,7 @@
 |---|---|---|
 | [兔子跳 Bunny Hop](wiki/bunny-hop.md) | 入門 | 滑鏟快結束時起跳，少碰地來保速 |
 | [Tap Strafe](wiki/tap-strafe.md) | 中階 | 空中按住 A/D、快速重複前進輸入來急轉彎 |
-| [Lurch](wiki/lurch.md) | 中階 | Tap Strafe 中「方向被拉過去」的動作；定義仍是缺口 |
+| [Lurch](wiki/lurch.md) | 中階 | Tap Strafe 裡的一個動作名稱；定義仍是缺口（「斜向拉力」只是推論） |
 | [蹬牆跳 Wall Bounce](wiki/wall-bounce.md) | 進階 | 斜角撞牆、碰牆瞬間再跳，彈得更高更遠 |
 | [超級滑翔 Super Glide](wiki/super-glide.md) | 進階 | 攀爬快結束時同按跳＋蹲，取消動畫高速射出 |
 | [滑索技巧 Zipline Tech](wiki/zipline-tech.md) | 進階 | 滑索上跳起再抓回、垂直滑索接蹬牆跳 |
