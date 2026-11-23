@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Apex 身法 LLM Wiki</title>
+<meta name="description" content="Apex Legends 身法教學的 LLM Wiki 與教學 HTML 簡報。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=LXGW+WenKai+TC:wght@400;700&family=Noto+Sans+TC:wght@500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{--desk:#e7dfce;--paper:#fbf7ee;--ink:#24324a;--ink-2:#56617a;--orange:#ff7a3d;--grid:rgba(36,50,74,.065)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--desk);color:var(--ink);font-family:"LXGW WenKai TC","Noto Sans TC",serif;padding:40px 16px;line-height:1.65}
+.paper{max-width:900px;margin:0 auto;background:var(--paper);border-radius:22px;padding:48px 44px;
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:32px 32px;
+  box-shadow:0 24px 50px -18px rgba(60,45,20,.35)}
+h1{font-family:"Noto Sans TC",sans-serif;font-weight:900;font-size:clamp(30px,6vw,46px);line-height:1.2}
+h1 span{background:linear-gradient(transparent 58%,#ffe17a 58%)}
+h2{font-family:"Noto Sans TC",sans-serif;font-weight:900;font-size:22px;margin:34px 0 12px}
+p{font-size:18px;color:var(--ink-2)}
+.big{display:block;margin-top:24px;background:var(--orange);color:#fff;text-decoration:none;font-family:"Noto Sans TC",sans-serif;font-weight:900;font-size:22px;padding:18px 24px;border-radius:16px;border:3px solid var(--ink);box-shadow:5px 5px 0 rgba(36,50,74,.2)}
+.big small{display:block;font-weight:500;font-size:15px;opacity:.9}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px}
+a.card{display:block;text-decoration:none;color:var(--ink);background:#fffdf8;border:2.5px solid var(--ink);border-radius:14px;padding:12px 16px;box-shadow:4px 4px 0 rgba(36,50,74,.14)}
+a.card:hover,.big:hover{transform:translate(-1px,-1px)}
+a.card b{font-family:"Noto Sans TC",sans-serif}
+a.card span{display:block;font-size:15px;color:var(--ink-2)}
+a:focus-visible{outline:3px solid var(--orange);outline-offset:3px}
+@media (max-width:600px){.paper{padding:32px 18px}}
+</style>
+</head>
+<body>
+<main class="paper">
+  <p style="font-family:'Noto Sans TC',sans-serif;font-weight:700;color:var(--orange)">LLM Wiki 作業 · Apex Legends</p>
+  <h1>Apex <span>身法</span> LLM Wiki</h1>
+  <p style="margin-top:12px">先和 AI 討論範圍，再 ingest 8 篇資料整理成 9 頁 Wiki，最後只用 Wiki 的內容產生教學簡報。每一步都有獨立的檢查者把關。</p>
+  <a class="big" href="slides/">▶ 開始看教學簡報<small>Apex 身法訓練手札：19 頁，← → 換頁，手機可直接捲動</small></a>
+
+  <h2>📒 Wiki 頁面</h2>
+  <div class="grid">
+    <a class="card" href="https://github.com/0ChanChuan0/apex-movement-wiki/blob/main/index.md"><b>目錄 index.md</b><span>全部頁面與 8 篇原始資料</span></a>
+    <a class="card" href="https://github.com/0ChanChuan0/apex-movement-wiki/blob/main/wiki/overview.md"><b>總覽</b><span>原理、分級、練習路線</span></a>
+    <a class="card" href="https://github.com/0ChanChuan0/apex-movement-wiki/blob/main/wiki/bunny-hop.md"><b>Lv.1 兔子跳</b><span>Bunny Hop</span></a>
+    <a class="card" href="https://github.com/0ChanChuan0/apex-movement-wiki/blob/main/wiki/tap-strafe.md"><b>Lv.2 Tap Strafe</b><span>＋ Lurch（定義仍是缺口）</span></a>
+    <a class="card" href="https://github.com/0ChanChuan0/apex-movement-wiki/blob/main/wiki/wall-bounce.md"><b>Lv.3 蹬牆跳</b><span>Wall Bounce</span></a>
+    <a class="card" href="https://github.com/0ChanChuan0/apex-movement-wiki/blob/main/wiki/super-glide.md"><b>Lv.3 超級滑翔</b><span>Super Glide</span></a>
+    <a class="card" href="https://github.com/0ChanChuan0/apex-movement-wiki/blob/main/wiki/zipline-tech.md"><b>Lv.3 滑索技巧</b><span>Zipline Tech</span></a>
+    <a class="card" href="https://github.com/0ChanChuan0/apex-movement-wiki/blob/main/wiki/kbm-vs-controller.md"><b>鍵鼠 vs 手把</b><span>各技巧能不能做</span></a>
+    <a class="card" href="https://github.com/0ChanChuan0/apex-movement-wiki/blob/main/wiki/version-history.md"><b>改版時間線</b><span>時效基準頁</span></a>
+  </div>
+
+  <h2>🔁 流程與檢查紀錄</h2>
+  <div class="grid">
+    <a class="card" href="https://github.com/0ChanChuan0/apex-movement-wiki/blob/main/CLAUDE.md"><b>CLAUDE.md</b><span>Wiki 規則檔（schema）</span></a>
+    <a class="card" href="https://github.com/0ChanChuan0/apex-movement-wiki/blob/main/process/01-討論紀錄.md"><b>01 討論紀錄</b><span>先討論、後生成</span></a>
+    <a class="card" href="https://github.com/0ChanChuan0/apex-movement-wiki/blob/main/process/02-loop-graph設計.md"><b>02 Loop / Graph 設計</b><span>流程圖與設計理由</span></a>
+    <a class="card" href="https://github.com/0ChanChuan0/apex-movement-wiki/blob/main/process/03-執行與檢查紀錄.md"><b>03 執行與檢查紀錄</b><span>一次實際執行的完整紀錄</span></a>
+    <a class="card" href="https://github.com/0ChanChuan0/apex-movement-wiki/blob/main/process/04-反思.md"><b>04 反思</b><span>哪個節點最常出錯</span></a>
+    <a class="card" href="https://github.com/0ChanChuan0/apex-movement-wiki/blob/main/log.md"><b>log.md</b><span>操作日誌</span></a>
+  </div>
+</main>
+</body>
+</html>

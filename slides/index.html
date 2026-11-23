@@ -1,0 +1,634 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Apex 身法訓練手札</title>
+<meta name="description" content="以 LLM Wiki 為知識來源製作的 Apex Legends 身法教學簡報：兔子跳、Tap Strafe、蹬牆跳、超級滑翔、滑索技巧。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=LXGW+WenKai+TC:wght@400;700&family=Noto+Sans+TC:wght@500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --desk:#e7dfce; --paper:#fbf7ee; --grid:rgba(36,50,74,.065);
+  --ink:#24324a; --ink-2:#56617a; --ink-3:#8a93a6;
+  --orange:#ff7a3d; --orange-bg:#ffe3d3;
+  --lv1:#2f9e68; --lv1-bg:#dcf2e4;
+  --lv2:#c98a06; --lv2-bg:#fcefc6;
+  --lv3:#d64848; --lv3-bg:#fbdcdc;
+  --blue:#3f86ad; --blue-bg:#d8eaf3;
+  --hl:#ffe17a;
+  --hand:"LXGW WenKai TC","Noto Sans TC",serif;
+  --sans:"Noto Sans TC",system-ui,sans-serif;
+  --latin:"Caveat",cursive;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{background:var(--desk);color:var(--ink);font-family:var(--hand);-webkit-font-smoothing:antialiased;overflow:hidden}
+/* ===== stage (desktop) ===== */
+.viewport{position:fixed;inset:0;overflow:hidden}
+.stage{position:absolute;left:50%;top:calc(50% - 26px);width:1280px;height:720px;transform-origin:center center;transform:translate(-50%,-50%)}
+.slide{position:absolute;inset:0;border-radius:22px;padding:64px 76px 56px;
+  background-color:var(--paper);
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:32px 32px;
+  box-shadow:0 2px 0 rgba(36,50,74,.08),0 24px 50px -18px rgba(60,45,20,.35);
+  opacity:0;visibility:hidden;transform:translateY(10px) rotate(-.4deg);transition:opacity .4s ease,transform .45s cubic-bezier(.2,.8,.2,1),visibility .4s;overflow:hidden}
+.slide.active{opacity:1;visibility:visible;transform:none}
+.tape{position:absolute;width:120px;height:30px;opacity:.85;border-radius:2px;
+  background:repeating-linear-gradient(90deg,rgba(255,255,255,.35) 0 6px,transparent 6px 12px)}
+.tape.a{top:-8px;left:70px;transform:rotate(-4deg);background-color:#a9d3e6}
+.tape.b{top:-6px;right:90px;transform:rotate(5deg);background-color:#f5b9b9}
+.tape.c{top:-8px;left:46%;transform:rotate(-2deg);background-color:#f8dc8a}
+.pg{position:absolute;right:30px;bottom:20px;font-family:var(--latin);font-size:26px;color:var(--ink-3)}
+.src{position:absolute;left:76px;bottom:22px;font-family:var(--sans);font-size:13px;color:var(--ink-3);display:flex;gap:6px;align-items:center}
+.src b{font-weight:700;color:var(--ink-2);background:rgba(36,50,74,.06);padding:2px 8px;border-radius:6px}
+/* ===== type ===== */
+h1{font-family:var(--sans);font-weight:900;font-size:76px;line-height:1.12;letter-spacing:.01em}
+h2{font-family:var(--sans);font-weight:900;font-size:46px;line-height:1.2;margin-bottom:8px}
+h3{font-family:var(--sans);font-weight:700;font-size:23px;margin-bottom:6px}
+p,li{font-size:22px;line-height:1.6}
+.sub{font-size:24px;color:var(--ink-2)}
+.dots{display:flex;gap:7px;margin:12px 0 26px}.dots i{width:7px;height:7px;border-radius:50%;background:#f0a0a0}
+.hl{background:linear-gradient(transparent 58%,var(--hl) 58%);padding:0 2px}
+.or{color:var(--orange)}
+.small{font-size:17px;color:var(--ink-2);line-height:1.55}
+.latin{font-family:var(--latin);font-weight:700}
+/* ===== components ===== */
+.card{background:#fffdf8;border:3px solid var(--ink);border-radius:16px;padding:18px 20px;box-shadow:5px 5px 0 rgba(36,50,74,.16)}
+.card.pink{background:#fde4e4}.card.yellow{background:#fff3cf}.card.green{background:#e3f4e9}.card.blue{background:#e1eff6}
+.row{display:flex;gap:22px}.row>*{flex:1;min-width:0}
+.col{display:flex;flex-direction:column;gap:14px}
+.lv{display:inline-flex;align-items:center;gap:6px;font-family:var(--sans);font-weight:900;font-size:17px;padding:5px 14px;border-radius:999px;border:2.5px solid currentColor;transform:rotate(-2deg)}
+.lv.l1{color:var(--lv1);background:var(--lv1-bg)}.lv.l2{color:var(--lv2);background:var(--lv2-bg)}.lv.l3{color:var(--lv3);background:var(--lv3-bg)}.lv.l0{color:var(--blue);background:var(--blue-bg)}
+.pill{display:inline-block;font-family:var(--sans);font-weight:700;font-size:14px;padding:3px 11px;border-radius:999px;background:var(--ink);color:#fff;margin-bottom:8px}
+.pill.o{background:var(--orange)}.pill.g{background:var(--lv1)}.pill.y{background:var(--lv2)}.pill.r{background:var(--lv3)}.pill.b{background:var(--blue)}
+.steps{list-style:none;display:flex;flex-direction:column;gap:12px;counter-reset:s}
+.steps li{counter-increment:s;position:relative;padding:12px 16px 12px 64px;background:#fffdf8;border:2.5px solid var(--ink);border-radius:14px;font-size:20px;line-height:1.5}
+.steps li::before{content:counter(s);position:absolute;left:14px;top:50%;transform:translateY(-50%) rotate(-6deg);width:36px;height:36px;border-radius:10px;background:var(--orange);color:#fff;font-family:var(--latin);font-size:28px;display:grid;place-items:center;line-height:1}
+.sticky{background:#fff1a8;padding:14px 18px;font-size:18px;line-height:1.55;box-shadow:3px 4px 0 rgba(36,50,74,.12);transform:rotate(1.2deg);border-radius:3px}
+.sticky.pink{background:#ffd9d9}.sticky.blue{background:#d6ecf7}
+.sticky b{font-family:var(--sans)}
+.def{font-family:var(--sans);font-size:14px;color:var(--ink-2);border-top:2px dashed rgba(36,50,74,.25);padding-top:8px;margin-top:10px}
+.def b{color:var(--ink)}
+/* mascot + bubble */
+.coach{position:absolute;width:150px}
+.bubble{position:absolute;background:#fff;border:3px solid var(--ink);border-radius:14px;padding:10px 16px;font-family:var(--sans);font-weight:700;font-size:17px;line-height:1.45;box-shadow:3px 3px 0 rgba(36,50,74,.15);transform:rotate(-1.5deg)}
+.bubble::after{content:"";position:absolute;bottom:-14px;right:42px;border:10px solid transparent;border-top:12px solid var(--ink);border-bottom:0}
+.bubble.left::after{right:auto;left:36px}
+svg text{font-family:"LXGW WenKai TC","Noto Sans TC",sans-serif}
+/* table */
+table{width:100%;border-collapse:separate;border-spacing:0;font-size:20px;background:#fffdf8;border:3px solid var(--ink);border-radius:16px;overflow:hidden;box-shadow:5px 5px 0 rgba(36,50,74,.16)}
+th,td{padding:14px 18px;text-align:left;border-bottom:2px dashed rgba(36,50,74,.18)}
+tr:last-child td{border-bottom:0}
+th{font-family:var(--sans);font-size:16px;color:var(--ink-2);background:rgba(36,50,74,.05)}
+td:first-child{font-family:var(--sans);font-weight:700}
+.yes{color:var(--lv1);font-family:var(--sans);font-weight:900;white-space:nowrap}
+.no{color:var(--lv3);font-family:var(--sans);font-weight:900}
+.maybe{color:var(--lv2);font-family:var(--sans);font-weight:900}
+/* timeline */
+.tl{position:relative;padding-left:34px;display:flex;flex-direction:column;gap:12px}
+.tl::before{content:"";position:absolute;left:11px;top:8px;bottom:8px;border-left:3px dashed var(--ink-3)}
+.tl>div{position:relative}
+.tl>div::before{content:"";position:absolute;left:-31px;top:7px;width:16px;height:16px;border-radius:50%;background:var(--paper);border:3px solid var(--ink-3)}
+.tl>div.hot::before{border-color:var(--lv3);background:var(--lv3-bg)}
+.tl .d{font-family:var(--latin);font-size:28px;line-height:1;color:var(--orange)}
+.tl p{font-size:18px;line-height:1.5}
+/* quiz */
+.quiz{cursor:pointer;user-select:none}
+.quiz .a{display:none;margin-top:10px;padding-top:10px;border-top:2px dashed rgba(36,50,74,.25);color:var(--lv1);font-size:18px}
+.quiz.open .a{display:block}.quiz.open .hint{display:none}
+.hint{font-family:var(--sans);font-size:14px;color:var(--ink-3);margin-top:8px}
+.quiz:focus-visible{outline:3px solid var(--orange);outline-offset:3px}
+/* nav */
+.nav{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);display:flex;align-items:center;gap:12px;background:#fff;border-radius:999px;padding:7px 10px;box-shadow:0 6px 20px -8px rgba(60,45,20,.4);z-index:5}
+.nav button{width:34px;height:34px;border-radius:50%;border:0;background:var(--blue-bg);color:var(--ink);font-size:18px;cursor:pointer;font-family:var(--sans)}
+.nav button:hover{background:#c4e0ee}
+.nav button:focus-visible{outline:3px solid var(--orange);outline-offset:2px}
+.pips{display:flex;gap:5px;align-items:center}
+.pips i{width:7px;height:7px;border-radius:50%;background:#d9d2c3;cursor:pointer;transition:all .25s}
+.pips i.on{width:22px;border-radius:5px;background:var(--blue)}
+/* ===== mobile: stacked cards ===== */
+@media (max-width:760px){
+  body{overflow:auto}
+  .viewport{position:static;display:block;padding:16px;overflow:visible}
+  .stage{position:static;width:auto;height:auto;transform:none!important}
+  .slide{position:relative;opacity:1;visibility:visible;transform:none;padding:34px 18px 52px;margin-bottom:22px;overflow:visible}
+  h1{font-size:40px} h2{font-size:28px} h3{font-size:19px}
+  p,li,.steps li{font-size:16px} .sub{font-size:17px} .small,.sticky{font-size:15px}
+  .row{flex-direction:column}
+  .coach,.bubble{position:static!important;transform:none!important;display:inline-block;margin-top:10px}
+  .coach{width:90px;vertical-align:bottom}
+  .bubble::after{display:none}
+  .hide-m{display:none!important}
+  .src{position:static;margin-top:16px;flex-wrap:wrap}
+  .pg{bottom:12px;right:16px;font-size:20px}
+  table{font-size:15px} th,td{padding:10px 10px}
+  .nav{display:none}
+  .grid4{grid-template-columns:1fr 1fr!important}
+}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="bunny" viewBox="0 0 140 175">
+      <ellipse cx="70" cy="150" rx="30" ry="20" fill="#fffdf8" stroke="#24324a" stroke-width="3.5"/>
+      <ellipse cx="56" cy="168" rx="11" ry="6" fill="#fffdf8" stroke="#24324a" stroke-width="3"/>
+      <ellipse cx="84" cy="168" rx="11" ry="6" fill="#fffdf8" stroke="#24324a" stroke-width="3"/>
+      <path d="M50 66 C34 30 38 6 51 7 C64 8 66 38 63 66" fill="#fffdf8" stroke="#24324a" stroke-width="3.5"/>
+      <path d="M52 58 C44 34 46 18 51 18 C57 19 58 38 57 58" fill="#ffc9c9"/>
+      <path d="M80 68 C84 34 97 9 109 15 C121 21 106 50 92 72" fill="#fffdf8" stroke="#24324a" stroke-width="3.5"/>
+      <path d="M86 60 C90 40 98 24 104 26 C109 29 100 46 92 62" fill="#ffc9c9"/>
+      <ellipse cx="70" cy="96" rx="45" ry="38" fill="#fffdf8" stroke="#24324a" stroke-width="3.5"/>
+      <path d="M27 84 Q70 62 113 84 L113 96 Q70 74 27 96 Z" fill="#ff7a3d" stroke="#24324a" stroke-width="3"/>
+      <circle cx="54" cy="104" r="5.5" fill="#24324a"/><circle cx="86" cy="104" r="5.5" fill="#24324a"/>
+      <circle cx="55.8" cy="102.2" r="1.8" fill="#fff"/><circle cx="87.8" cy="102.2" r="1.8" fill="#fff"/>
+      <ellipse cx="42" cy="114" rx="7" ry="4" fill="#ffb3b3"/><ellipse cx="98" cy="114" rx="7" ry="4" fill="#ffb3b3"/>
+      <path d="M63 114 Q70 121 77 114" fill="none" stroke="#24324a" stroke-width="3" stroke-linecap="round"/>
+    </symbol>
+    <symbol id="bunny-hmm" viewBox="0 0 140 175">
+      <ellipse cx="70" cy="150" rx="30" ry="20" fill="#fffdf8" stroke="#24324a" stroke-width="3.5"/>
+      <ellipse cx="56" cy="168" rx="11" ry="6" fill="#fffdf8" stroke="#24324a" stroke-width="3"/>
+      <ellipse cx="84" cy="168" rx="11" ry="6" fill="#fffdf8" stroke="#24324a" stroke-width="3"/>
+      <path d="M48 68 C24 44 18 18 30 13 C42 9 56 36 62 66" fill="#fffdf8" stroke="#24324a" stroke-width="3.5"/>
+      <path d="M80 68 C84 34 97 9 109 15 C121 21 106 50 92 72" fill="#fffdf8" stroke="#24324a" stroke-width="3.5"/>
+      <ellipse cx="70" cy="96" rx="45" ry="38" fill="#fffdf8" stroke="#24324a" stroke-width="3.5"/>
+      <path d="M27 84 Q70 62 113 84 L113 96 Q70 74 27 96 Z" fill="#ff7a3d" stroke="#24324a" stroke-width="3"/>
+      <path d="M47 104 L60 104" stroke="#24324a" stroke-width="4" stroke-linecap="round"/>
+      <circle cx="86" cy="104" r="5.5" fill="#24324a"/>
+      <ellipse cx="42" cy="114" rx="7" ry="4" fill="#ffb3b3"/><ellipse cx="98" cy="114" rx="7" ry="4" fill="#ffb3b3"/>
+      <path d="M62 118 Q70 113 78 118" fill="none" stroke="#24324a" stroke-width="3" stroke-linecap="round"/>
+      <text x="112" y="70" font-size="26" fill="#24324a" font-family="sans-serif" font-weight="900">?</text>
+    </symbol>
+    <marker id="arr" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1 1 L9 5 L1 9" fill="none" stroke="context-stroke" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></marker>
+  </defs>
+</svg>
+
+<div class="viewport"><div class="stage" id="stage">
+
+<!-- 01 封面 -->
+<section class="slide" data-wiki="overview.md">
+  <div class="tape a"></div><div class="tape b"></div>
+  <div style="margin-top:70px;max-width:760px">
+    <span class="pill b">Apex Legends · 身法教學</span>
+    <h1 style="margin-top:14px">Apex <span class="hl">身法</span><br>訓練手札</h1>
+    <p class="sub" style="margin-top:18px">地板會偷走你的速度——那就少碰它。</p>
+    <div style="display:flex;gap:12px;margin-top:34px;flex-wrap:wrap">
+      <span class="lv l1">Lv.1 兔子跳</span><span class="lv l2">Lv.2 Tap Strafe</span><span class="lv l3">Lv.3 蹬牆跳・超級滑翔・滑索</span>
+    </div>
+  </div>
+  <div class="bubble hide-m" style="right:96px;top:170px">我是兔兔教練！<br>今天教你怎麼「不落地」。</div>
+  <svg class="coach" style="right:120px;bottom:70px;width:210px" viewBox="0 0 140 175" role="img" aria-label="兔兔教練"><use href="#bunny"/></svg>
+  <div class="src">內容全部來自自建 LLM Wiki（8 篇資料・9 個頁面）</div>
+  <div class="pg">01</div>
+</section>
+
+<!-- 02 開始之前 -->
+<section class="slide" data-wiki="overview.md">
+  <div class="tape c"></div>
+  <h2>開始之前，先打勾 ✓</h2><div class="dots"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+  <div class="row">
+    <div class="card blue">
+      <span class="pill b">前置條件（今天不教）</span>
+      <ul style="list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:8px 20px;margin-top:6px">
+        <li>☑ 衝刺</li><li>☑ 滑鏟</li><li>☑ 跳躍</li><li>☑ 攀爬</li>
+      </ul>
+      <p class="small" style="margin-top:10px">這些是遊戲的基本操作。身法，是把它們「組合起來」。</p>
+    </div>
+    <div class="col" style="flex:1.25">
+      <div class="card"><h3>① 身法在做什麼</h3><p class="small">大部分技巧背後的同一個原理</p></div>
+      <div class="card"><h3>② 五個技巧怎麼練</h3><p class="small">Lv.1 → Lv.2 → Lv.3，一關一關來</p></div>
+      <div class="card"><h3>③ 怎麼判斷教學過時了</h3><p class="small">身法會被改版，看教學要先看日期</p></div>
+    </div>
+  </div>
+  <div class="src">📒 <b>overview.md</b></div>
+  <div class="pg">02</div>
+</section>
+
+<!-- 03 什麼是身法 -->
+<section class="slide" data-wiki="overview.md">
+  <div class="tape a"></div>
+  <h2>身法 ＝ 把基本操作<br><span class="hl">串起來・取消掉・轉個彎</span></h2><div class="dots"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+  <div class="row" style="margin-top:10px">
+    <div class="card yellow"><div class="latin" style="font-size:44px;color:var(--orange);line-height:1">faster</div><h3>更快</h3><p class="small">保住速度、快速轉點</p></div>
+    <div class="card pink"><div class="latin" style="font-size:44px;color:var(--lv3);line-height:1">dodge</div><h3>更難被打中</h3><p class="small">用 Tap Strafe 閃避子彈、在滑索上跳起閃避</p></div>
+    <div class="card green"><div class="latin" style="font-size:44px;color:var(--lv1);line-height:1">surprise</div><h3>出其不意</h3><p class="small">突然加速換位、越過障礙</p></div>
+  </div>
+  <div class="src">📒 <b>overview.md</b> 來源 S01 S05 S06 S07</div>
+  <div class="pg">03</div>
+</section>
+
+<!-- 04 核心原理 -->
+<section class="slide" data-wiki="overview.md">
+  <div class="tape b"></div>
+  <h2>一句話記住：<span class="or">地板是小偷。</span></h2><div class="dots"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+  <div class="row" style="align-items:center">
+    <svg viewBox="0 0 600 300" style="flex:1.35" role="img" aria-label="在地面上速度箭頭越來越短；在空中速度箭頭長度不變">
+      <text x="0" y="26" font-size="24" fill="#24324a" font-weight="700">在地面上</text>
+      <text x="110" y="26" font-size="19" fill="#56617a">摩擦一直偷走速度</text>
+      <path d="M0 118 Q150 112 300 118 T600 116" stroke="#24324a" stroke-width="3" fill="none"/>
+      <g stroke="#8a93a6" stroke-width="6" stroke-linecap="round" fill="none" marker-end="url(#arr)">
+        <path d="M14 88 L170 88"/><path d="M200 88 L305 88"/><path d="M335 88 L400 88"/><path d="M430 88 L455 88"/>
+      </g>
+      <text x="470" y="96" font-size="18" fill="#d64848">變慢…</text>
+      <text x="0" y="178" font-size="24" fill="#24324a" font-weight="700">在空中</text>
+      <text x="88" y="178" font-size="19" fill="#56617a">沒有摩擦，速度保住</text>
+      <g stroke="#ff7a3d" stroke-width="6" stroke-linecap="round" fill="none" marker-end="url(#arr)">
+        <path d="M14 262 Q80 226 160 222"/><path d="M200 216 L345 216"/><path d="M385 222 Q470 226 560 262"/>
+      </g>
+      <path d="M0 290 L600 290" stroke="#24324a" stroke-width="3" stroke-dasharray="3 10" stroke-linecap="round"/>
+    </svg>
+    <div class="col">
+      <div class="card"><span class="pill g">Lv.1 兔子跳</span><p class="small">少碰地 → 保住速度</p></div>
+      <div class="card"><span class="pill r">Lv.3 超級滑翔</span><p class="small">取消攀爬動畫、變成空中滑行 → 加速</p></div>
+      <div class="card"><span class="pill y">Lv.2 Tap Strafe</span><p class="small">在空中改變已經有的速度方向</p></div>
+    </div>
+  </div>
+  <div class="src">📒 <b>overview.md</b> 來源 S01 S05 S08</div>
+  <div class="pg">04</div>
+</section>
+
+<!-- 05 關卡地圖 -->
+<section class="slide" data-wiki="overview.md">
+  <div class="tape c"></div>
+  <h2>關卡地圖：一關一關來</h2><div class="dots"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+  <svg viewBox="0 0 1128 170" style="width:100%;margin-top:-6px" class="hide-m" aria-hidden="true">
+    <path d="M20 130 Q100 70 182 110 T 564 100 T 946 104 T 1110 70" fill="none" stroke="#24324a" stroke-width="3" stroke-dasharray="2 12" stroke-linecap="round"/>
+    <g font-size="20" font-weight="700" fill="#24324a" text-anchor="middle">
+      <circle cx="182" cy="110" r="16" fill="#dcf2e4" stroke="#2f9e68" stroke-width="3"/><text x="182" y="76">START</text>
+      <circle cx="564" cy="100" r="16" fill="#fcefc6" stroke="#c98a06" stroke-width="3"/>
+      <circle cx="946" cy="104" r="16" fill="#fbdcdc" stroke="#d64848" stroke-width="3"/>
+      <path d="M1060 84 L1060 30 L1100 40 L1060 50" fill="#d64848" stroke="#24324a" stroke-width="3" stroke-linejoin="round"/><text x="1062" y="116">GOAL</text>
+    </g>
+  </svg>
+  <div class="row">
+    <div class="card green"><span class="lv l1">Lv.1 入門</span><h3 style="margin-top:12px">兔子跳</h3><p class="small">把會的基本操作串起來。</p></div>
+    <div class="card yellow"><span class="lv l2">Lv.2 中階</span><h3 style="margin-top:12px">Tap Strafe</h3><p class="small">原理好懂；鍵鼠改個按鍵綁定就能開始練。<br><span style="color:var(--ink-3)">（討論時我們的判斷）</span></p></div>
+    <div class="card pink"><span class="lv l3">Lv.3 進階</span><h3 style="margin-top:12px">蹬牆跳・超級滑翔・滑索</h3><p class="small">要抓特定瞬間，或要先會別的進階技巧。</p></div>
+  </div>
+  <div class="def"><b>進階的判斷標準（任一項）：</b>① 單幀輸入窗口（超級滑翔）② 要在特定瞬間輸入（蹬牆跳的碰牆瞬間）③ 要先會另一個進階技巧（滑索接蹬牆跳）　<b>單幀</b>＝輸入要落在畫面更新的某一格裡，早一點晚一點都不行。</div>
+  <div class="src">📒 <b>overview.md</b> <b>CLAUDE.md 分級規則</b></div>
+  <div class="pg">05</div>
+</section>
+
+<!-- 06 兔子跳 -->
+<section class="slide" data-wiki="bunny-hop.md">
+  <div class="tape a"></div>
+  <span class="lv l1">Lv.1 入門</span>
+  <h2 style="margin-top:12px">兔子跳 <span class="latin" style="color:var(--ink-3);font-size:44px">Bunny Hop</span></h2>
+  <p class="small" style="margin-bottom:18px">用<b class="hl">快速、小幅度的連續跳躍</b>，少碰地來保住速度。</p>
+  <div class="row">
+    <ol class="steps" style="flex:1.15">
+      <li><b>起手：滑鏟跳</b>　衝刺 → 滑鏟，在<b>滑鏟快結束時</b>按跳，把速度帶進跳躍</li>
+      <li><b>接著：連續小跳</b>　落地後按住蹲下、盡快再跳，<b>接地越短越好</b></li>
+      <li><b>看地形</b>　下坡：直接滑鏟＋跳；上坡：直接衝刺比較快</li>
+    </ol>
+    <div style="position:relative">
+      <svg viewBox="0 0 460 230" role="img" aria-label="滑鏟後連續小跳，接地點越短越好">
+        <path d="M10 190 Q230 186 450 190" stroke="#24324a" stroke-width="3" fill="none"/>
+        <path d="M20 184 L96 184" stroke="#ff7a3d" stroke-width="7" stroke-linecap="round"/>
+        <text x="22" y="220" font-size="17" fill="#56617a">滑鏟</text>
+        <path d="M96 184 Q148 80 200 186 Q246 96 292 186 Q336 106 380 186 Q410 140 440 160" fill="none" stroke="#2f9e68" stroke-width="4" stroke-linecap="round" stroke-dasharray="1 9"/>
+        <g fill="#ffe17a" stroke="#24324a" stroke-width="2.5"><circle cx="200" cy="186" r="7"/><circle cx="292" cy="186" r="7"/><circle cx="380" cy="186" r="7"/></g>
+        <text x="236" y="46" font-size="18" fill="#24324a">● 接地點：越短越好</text>
+      </svg>
+      <div class="sticky" style="margin:6px 0 0 30px;max-width:330px">從滑鏟跳出去，比從衝刺跳出去<b>更能保住速度</b>。</div>
+    </div>
+  </div>
+  <div class="src">📒 <b>bunny-hop.md</b> 來源 S01 S06 S08</div>
+  <div class="pg">06</div>
+</section>
+
+<!-- 07 兔子跳 NG -->
+<section class="slide" data-wiki="bunny-hop.md">
+  <div class="tape b"></div>
+  <span class="lv l1">Lv.1 入門</span>
+  <h2 style="margin-top:12px">練不起來？先看這 4 張</h2><div class="dots"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;max-width:900px">
+    <div class="card pink"><span class="pill r">NG</span><h3>滑鏟跳連太急</h3><p class="small">連續做滑鏟跳時，兩次之間要留時間，讓每次都滑出完整一段。（連續小跳則相反：越快越好）</p></div>
+    <div class="card blue"><span class="pill b">手把</span><h3>按不到跳＋蹲</h3><p class="small">預設配置很難不放開搖桿就同時按 → 重新綁定，讓兩隻拇指留在搖桿上。</p></div>
+    <div class="card yellow"><span class="pill y">限制・有衝突</span><h3>有些時候不能用</h3><p class="small">社群 Wiki：用回復道具、或用 Seer 的 Heart Seeker 瞄準時不能兔子跳。但 2019 年的教學說可以邊跳邊治療 → 以較新的社群 Wiki 為準。</p></div>
+    <div class="card"><span class="pill">說法不一</span><h3>要不要放開前進鍵？</h3><p class="small">2019 年的教學說要放，讀者說不用 → 不列為必要步驟。</p></div>
+  </div>
+  <svg class="coach hide-m" style="right:70px;bottom:60px" viewBox="0 0 140 175" aria-hidden="true"><use href="#bunny-hmm"/></svg>
+  <div class="bubble hide-m" style="right:40px;top:150px;max-width:220px">來源說法不一樣時，<br>我會老實告訴你！</div>
+  <div class="src">📒 <b>bunny-hop.md</b> 來源 S01 S06 S08</div>
+  <div class="pg">07</div>
+</section>
+
+<!-- 08 Tap Strafe 原理 -->
+<section class="slide" data-wiki="tap-strafe.md">
+  <div class="tape c"></div>
+  <span class="lv l2">Lv.2 中階</span>
+  <h2 style="margin-top:12px">在空中，也能<span class="hl">急轉彎</span>。</h2><div class="dots"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+  <div class="row" style="align-items:center">
+    <svg viewBox="0 0 480 330" role="img" aria-label="一般空中轉向是緩弧線，Tap Strafe 每次前進輸入偏一點，累積成急轉彎">
+      <circle cx="50" cy="290" r="10" fill="#24324a"/><text x="66" y="318" font-size="18" fill="#56617a">起跳</text>
+      <path d="M50 290 Q240 230 460 210" fill="none" stroke="#8a93a6" stroke-width="3" stroke-dasharray="8 8"/>
+      <text x="330" y="196" font-size="18" fill="#56617a">一般空中轉向</text>
+      <path d="M50 290 L150 246 L208 206 L240 156 L248 104 L236 52" fill="none" stroke="#c98a06" stroke-width="5" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arr)"/>
+      <g fill="#ffe17a" stroke="#24324a" stroke-width="2.5"><circle cx="150" cy="246" r="7"/><circle cx="208" cy="206" r="7"/><circle cx="240" cy="156" r="7"/><circle cx="248" cy="104" r="7"/></g>
+      <text x="268" y="70" font-size="24" fill="#c98a06" font-weight="700">Tap Strafe</text>
+      <text x="268" y="98" font-size="17" fill="#56617a">● ＝ 一次「前進」輸入</text>
+    </svg>
+    <div class="col">
+      <div class="card"><h3>原理</h3><p class="small">每按一次「前進」，空中的速度方向就偏一點；快速重複，偏移累積成大角度，最多接近 180 度。做對時會感覺到一股<b>「斜向拉力」</b>。</p></div>
+      <div class="sticky blue">你可能會在教學或新聞裡看到 <b>Lurch</b> 這個詞，它是 Tap Strafe 裡的一個動作名稱。<br><span style="color:var(--ink-2)">Wiki 找不到它的定義；它是不是就是「斜向拉力」，只是推論，所以這裡不下定義。</span></div>
+    </div>
+  </div>
+  <div class="src">📒 <b>tap-strafe.md</b> <b>lurch.md</b> 來源 S03 S04 S07</div>
+  <div class="pg">08</div>
+</section>
+
+<!-- 09 Tap Strafe 步驟 -->
+<section class="slide" data-wiki="tap-strafe.md">
+  <div class="tape a"></div>
+  <span class="lv l2">Lv.2 中階</span>
+  <h2 style="margin-top:12px">Tap Strafe 怎麼做 <span class="latin" style="color:var(--ink-3);font-size:40px">keyboard &amp; mouse</span></h2>
+  <div class="row" style="margin-top:14px">
+    <ol class="steps" style="flex:1.4">
+      <li>先做出<b>滑鏟跳</b>，帶著速度離地</li>
+      <li>在空中<b>按住要轉的方向</b>：A（左）或 D（右）</li>
+      <li>在跳躍最高點，<b>快速重複「前進」</b>：快速點 W，或把前進綁到<b>滾輪</b>直接撥</li>
+      <li>感覺被斜向拉過去後，滑鼠往同方向轉，繼續重複前進</li>
+    </ol>
+    <div class="col">
+      <div class="sticky"><b>來源衝突</b><br>一篇教學寫「最高點連點 Space」，另外 3 個獨立來源都是「重複前進」→ 採多數。</div>
+      <div class="sticky pink"><b>手把？</b><br>社群 Wiki 說做不到：需要同時多個方向輸入。</div>
+    </div>
+  </div>
+  <div class="src">📒 <b>tap-strafe.md</b> 來源 S01 S03 S04 S08</div>
+  <div class="pg">09</div>
+</section>
+
+<!-- 10 時間線 -->
+<section class="slide" data-wiki="version-history.md">
+  <div class="tape b"></div>
+  <span class="lv l2">Lv.2 中階</span>
+  <h2 style="margin-top:12px">看教學，<span class="hl">先看日期</span>。</h2><div class="dots"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+  <div class="row">
+    <div class="tl" style="flex:1.35">
+      <div><div class="d">2021-08</div><p>官方宣布要在 patch 10.1 移除 Tap Strafe</p></div>
+      <div><div class="d">2021-09</div><p>出現非預期的副作用 → 延後；之後被「調校」保留</p></div>
+      <div class="hot"><div class="d">2025-01-07</div><p>Season 23 期中更新加「緩衝」，針對高 FPS 下的自動化技巧（巨集）</p></div>
+      <div class="hot"><div class="d">~2025-01-09</div><p>職業選手反彈 → 官方撤回</p></div>
+      <div><div class="d">2026</div><p>讀過的 Season 29、31 patch notes 沒看到改動；2025-09 的教學說仍可用 → 視為仍可用</p></div>
+    </div>
+    <div class="col">
+      <div class="card yellow"><h3>為什麼重要？</h3><p class="small">網路上很多身法教學是 2019–2023 年寫的，可能已經過時。</p></div>
+      <div class="def" style="margin-top:0"><b>巨集</b>＝自動幫你按按鍵的程式或設定。<br><b>沒查過的範圍：</b>Season 24–28、Season 30。</div>
+    </div>
+  </div>
+  <div class="src">📒 <b>version-history.md</b> 來源 S02 S03 S04 S07</div>
+  <div class="pg">10</div>
+</section>
+
+<!-- 11 蹬牆跳 -->
+<section class="slide" data-wiki="wall-bounce.md">
+  <div class="tape c"></div>
+  <span class="lv l3">Lv.3 進階</span>
+  <h2 style="margin-top:12px">蹬牆跳 <span class="latin" style="color:var(--ink-3);font-size:44px">Wall Bounce</span></h2>
+  <div class="row" style="margin-top:14px;align-items:flex-start">
+    <ol class="steps">
+      <li>衝刺跳或滑鏟跳，帶著速度接近牆</li>
+      <li>用<b>斜角</b>接近，不要正面撞</li>
+      <li>跳起後在空中<b>放開前進</b>（W／左搖桿）</li>
+      <li><b>碰到牆的那一刻再跳一次</b>，同時轉向目標方向</li>
+    </ol>
+    <div>
+      <svg viewBox="0 0 440 280" role="img" aria-label="斜角接近牆面，碰牆瞬間再跳，被彈得更高更遠">
+        <rect x="350" y="20" width="26" height="240" fill="#d8d0bf" stroke="#24324a" stroke-width="3"/>
+        <path d="M0 262 L440 262" stroke="#24324a" stroke-width="3"/>
+        <path d="M20 250 Q200 236 346 168" fill="none" stroke="#56617a" stroke-width="4" stroke-dasharray="1 9" stroke-linecap="round"/>
+        <path d="M346 168 Q240 30 80 54" fill="none" stroke="#d64848" stroke-width="5" stroke-linecap="round" marker-end="url(#arr)"/>
+        <circle cx="346" cy="168" r="10" fill="#fbdcdc" stroke="#d64848" stroke-width="3"/>
+        <text x="170" y="236" font-size="18" fill="#56617a">斜角接近</text>
+        <text x="186" y="40" font-size="20" fill="#d64848" font-weight="700">碰牆瞬間再跳！</text>
+      </svg>
+      <div class="sticky pink" style="margin-top:4px"><b>NG：</b>正面撞牆、沒放開前進、牆面不平 → 先在靶場找平整的牆練。</div>
+    </div>
+  </div>
+  <div class="src">📒 <b>wall-bounce.md</b> 來源 S01 S06</div>
+  <div class="pg">11</div>
+</section>
+
+<!-- 12 超級滑翔 -->
+<section class="slide" data-wiki="super-glide.md">
+  <div class="tape a"></div>
+  <span class="lv l3">Lv.3 進階</span>
+  <h2 style="margin-top:12px">超級滑翔 <span class="latin" style="color:var(--ink-3);font-size:44px">Super Glide</span></h2>
+  <div class="row" style="margin-top:14px;align-items:flex-start">
+    <ol class="steps">
+      <li>找一個可以攀爬的牆緣或箱子</li>
+      <li>開始攀爬（mantle）</li>
+      <li>在<b>攀爬動畫的最後</b>，同時按 <b>跳躍＋蹲下</b></li>
+      <li>同時按住想去的方向 → 高速射出</li>
+    </ol>
+    <div class="col">
+      <svg viewBox="0 0 460 120" role="img" aria-label="攀爬動畫時間軸，只有最後很窄的一段是正確時機">
+        <text x="0" y="20" font-size="18" fill="#56617a">攀爬動畫時間軸 →</text>
+        <rect x="2" y="34" width="440" height="38" rx="10" fill="#fffdf8" stroke="#24324a" stroke-width="3"/>
+        <rect x="408" y="37" width="14" height="32" fill="#d64848"/>
+        <path d="M415 80 L415 96" stroke="#d64848" stroke-width="3"/>
+        <text x="268" y="114" font-size="19" fill="#d64848" font-weight="700">極窄的輸入窗口</text>
+      </svg>
+      <div class="sticky" style="font-size:16px">來源怎麼說時機：「動畫最高點」／「動畫快結束時」——是不是同一刻，<b>未確認</b>。</div>
+      <div class="def" style="margin-top:0">有教學說<b>降低 FPS 上限</b>會讓窗口變寬（單一來源）。初速約 10.3 m/s（社群數值，未經官方驗證）。教學是 2022–2024 年寫的，2025 年底的熱修可能動過相關機制（未證實）。<br><b>FPS</b>＝每秒畫面更新幾次。</div>
+    </div>
+  </div>
+  <div class="src">📒 <b>super-glide.md</b> <b>version-history.md</b> 來源 S01 S05</div>
+  <div class="pg">12</div>
+</section>
+
+<!-- 13 滑索 -->
+<section class="slide" data-wiki="zipline-tech.md">
+  <div class="tape b"></div>
+  <span class="lv l3">Lv.3 進階</span>
+  <h2 style="margin-top:12px">滑索技巧 <span class="latin" style="color:var(--ink-3);font-size:44px">Zipline Tech</span></h2>
+  <div class="row" style="margin-top:16px">
+    <div class="card blue">
+      <svg viewBox="0 0 400 140" aria-hidden="true"><path d="M10 40 L390 70" stroke="#24324a" stroke-width="3"/><path d="M120 50 Q170 -6 220 58" fill="none" stroke="#3f86ad" stroke-width="4" stroke-dasharray="1 9" stroke-linecap="round"/><circle cx="120" cy="49" r="7" fill="#fffdf8" stroke="#24324a" stroke-width="3"/><circle cx="220" cy="57" r="7" fill="#fffdf8" stroke="#24324a" stroke-width="3"/><text x="240" y="120" font-size="17" fill="#56617a">跳起 → 抓回</text></svg>
+      <h3>橫向滑索：跳起再抓回</h3><p class="small">在滑索上跳起閃避子彈，空中再抓回去。只能跳一到兩次，跳太多會完全脫離。</p>
+    </div>
+    <div class="card pink">
+      <svg viewBox="0 0 400 140" aria-hidden="true"><path d="M200 135 L200 5" stroke="#24324a" stroke-width="3"/><rect x="300" y="10" width="20" height="125" fill="#d8d0bf" stroke="#24324a" stroke-width="3"/><path d="M200 100 Q260 80 298 60 Q250 30 210 20" fill="none" stroke="#d64848" stroke-width="4" stroke-linecap="round" marker-end="url(#arr)"/><text x="20" y="120" font-size="17" fill="#56617a">上升中借牆彈</text></svg>
+      <h3>垂直滑索：接蹬牆跳</h3><p class="small">上升途中借旁邊的牆做蹬牆跳，變成很難瞄準的目標。（所以要先會蹬牆跳）</p>
+    </div>
+  </div>
+  <div class="def">⚠ 時效：2026 年 Broken Moon 移除了多數連接 POI 的滑索，那張地圖能用的機會變少。　<b>POI</b>＝地圖上有名字的地點。</div>
+  <div class="src">📒 <b>zipline-tech.md</b> 來源 S02 S06</div>
+  <div class="pg">13</div>
+</section>
+
+<!-- 14 鍵鼠 vs 手把 -->
+<section class="slide" data-wiki="kbm-vs-controller.md">
+  <div class="tape c"></div>
+  <span class="lv l0">裝置差異</span>
+  <h2 style="margin-top:12px">鍵鼠 vs 手把：哪些做得到？</h2><div class="dots"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+  <table>
+    <thead><tr><th>技巧</th><th>鍵鼠</th><th>手把</th></tr></thead>
+    <tbody>
+      <tr><td>兔子跳</td><td class="yes">可以</td><td><span class="maybe">來源未明說</span>　<span class="small">來源只講到滑鏟跳要重新綁定跳／蹲</span></td></tr>
+      <tr><td>Tap Strafe</td><td class="yes">可以</td><td><span class="no">社群 Wiki：做不到</span>　<span class="small">需要多個方向輸入</span></td></tr>
+      <tr><td>蹬牆跳</td><td class="yes">可以</td><td><span class="yes">可以</span>　<span class="small">空中放開左搖桿</span></td></tr>
+      <tr><td>超級滑翔</td><td class="yes">可以</td><td><span class="yes">可以</span>　<span class="small">同時按跳＋蹲</span></td></tr>
+    </tbody>
+  </table>
+  <p class="small" style="margin-top:14px">🎮 手把小技巧：把蹲下綁到右搖桿按下，可以邊蹲邊瞄。</p>
+  <div class="src">📒 <b>kbm-vs-controller.md</b> 來源 S01 S03 S04 S05 S06 S08</div>
+  <div class="pg">14</div>
+</section>
+
+<!-- 15 練習菜單 -->
+<section class="slide" data-wiki="overview.md">
+  <div class="tape a"></div><div class="tape b"></div>
+  <h2>靶場練習菜單 🗒</h2><div class="dots"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+  <div class="grid4" style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px">
+    <div class="card green"><span class="lv l1">1</span><h3 style="margin-top:10px">兔子跳</h3><p class="small">先練「滑鏟快結束時才跳」。</p></div>
+    <div class="card yellow"><span class="lv l2">2</span><h3 style="margin-top:10px">Tap Strafe</h3><p class="small">滑鏟跳起手；快速點 W，或把前進綁到滾輪。</p></div>
+    <div class="card pink"><span class="lv l3">3</span><h3 style="margin-top:10px">蹬牆跳</h3><p class="small">衝刺跳或滑鏟跳起手；找平整的牆練。</p></div>
+    <div class="card pink"><span class="lv l3">4</span><h3 style="margin-top:10px">超級滑翔</h3><p class="small">用靶場的牆緣練；有教學建議先調低 FPS 上限（單一來源）。</p></div>
+  </div>
+  <div class="sticky blue" style="margin-top:22px;max-width:760px">順序是照本 Wiki 的分級排的，不是來源規定的。<br>小發現：<b>滑鏟跳</b>是兔子跳、Tap Strafe、蹬牆跳共同的起手；超級滑翔則是靠攀爬起手。</div>
+  <svg class="coach hide-m" style="right:80px;bottom:56px;width:130px" viewBox="0 0 140 175" aria-hidden="true"><use href="#bunny"/></svg>
+  <div class="src">📒 <b>overview.md</b>（練習路線）來源 S01 S03 S04 S05 S06 S08</div>
+  <div class="pg">15</div>
+</section>
+
+<!-- 16 小測驗 -->
+<section class="slide" data-wiki="overview.md">
+  <div class="tape c"></div>
+  <h2>隨堂小考 ✏️ <span class="small" style="font-family:var(--sans)">點卡片翻答案</span></h2><div class="dots"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+  <div class="row">
+    <div class="card quiz" tabindex="0" role="button" aria-label="第一題"><span class="pill o">Q1</span><p>為什麼兔子跳要「少碰地」？</p><p class="hint">點我看答案</p><p class="a">減速來自地面摩擦，人在空中速度不會被偷走。</p></div>
+    <div class="card quiz" tabindex="0" role="button" aria-label="第二題"><span class="pill o">Q2</span><p>超級滑翔要在什麼時候按跳躍＋蹲下？</p><p class="hint">點我看答案</p><p class="a">攀爬動畫的最後（來源說「最高點」或「快結束時」），窗口很窄。</p></div>
+    <div class="card quiz" tabindex="0" role="button" aria-label="第三題"><span class="pill o">Q3</span><p>看到一篇 2021 年的 Tap Strafe 教學，要注意什麼？</p><p class="hint">點我看答案</p><p class="a">可能過時：2021 年宣布移除又延後，2025 年加緩衝又撤回。要對照最新官方更新。</p></div>
+  </div>
+  <div class="src">📒 <b>bunny-hop.md</b> <b>super-glide.md</b> <b>version-history.md</b></div>
+  <div class="pg">16</div>
+</section>
+
+<!-- 17 回顧 -->
+<section class="slide" data-wiki="overview.md">
+  <div class="tape a"></div>
+  <h2>帶走這四句話</h2><div class="dots"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:18px;max-width:880px">
+    <div class="card yellow"><h3>① 地板是小偷</h3><p class="small">大部分身法都在利用「空中不減速」。</p></div>
+    <div class="card green"><h3>② 先練滑鏟跳</h3><p class="small">它是兔子跳、Tap Strafe、蹬牆跳的起手。</p></div>
+    <div class="card pink"><h3>③ 進階＝抓瞬間</h3><p class="small">碰牆的瞬間、攀爬動畫的最後。</p></div>
+    <div class="card blue"><h3>④ 看教學先看日期</h3><p class="small">身法會被改版，對照最新官方更新。</p></div>
+  </div>
+  <div class="bubble hide-m" style="right:70px;top:160px">去靶場<br>跳起來吧！</div>
+  <svg class="coach hide-m" style="right:70px;bottom:70px;width:170px" viewBox="0 0 140 175" aria-hidden="true"><use href="#bunny"/></svg>
+  <div class="src">📒 <b>overview.md</b></div>
+  <div class="pg">17</div>
+</section>
+
+<!-- 18 幕後 -->
+<section class="slide" data-wiki="process">
+  <div class="tape b"></div>
+  <span class="lv l0">幕後</span>
+  <h2 style="margin-top:12px">這份簡報是怎麼做出來的？</h2><div class="dots"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+  <svg viewBox="0 0 1128 250" style="width:100%" role="img" aria-label="流程：討論、收資料、寫 Wiki、Wiki 檢查、做簡報、簡報檢查、實測；檢查失敗會回到前面的步驟">
+    <g font-size="19" font-weight="700" fill="#24324a" text-anchor="middle">
+      <g stroke="#24324a" stroke-width="3">
+        <rect x="4" y="80" width="130" height="64" rx="14" fill="#d8eaf3"/>
+        <rect x="164" y="80" width="140" height="64" rx="14" fill="#fffdf8"/>
+        <rect x="334" y="80" width="140" height="64" rx="14" fill="#fffdf8"/>
+        <rect x="504" y="80" width="130" height="64" rx="14" fill="#fbdcdc"/>
+        <rect x="664" y="80" width="130" height="64" rx="14" fill="#fffdf8"/>
+        <rect x="824" y="80" width="130" height="64" rx="14" fill="#fbdcdc"/>
+        <rect x="984" y="80" width="140" height="64" rx="14" fill="#dcf2e4"/>
+      </g>
+      <text x="69" y="118">討論範圍</text><text x="234" y="108">收資料</text><text x="234" y="132" font-size="14" font-weight="400">Sonnet ×3 並行</text>
+      <text x="404" y="108">寫 Wiki</text><text x="404" y="132" font-size="14" font-weight="400">時效＋引用自查</text>
+      <text x="569" y="118">Wiki 檢查</text><text x="729" y="118">做簡報</text><text x="889" y="118">簡報檢查</text><text x="1054" y="118">瀏覽器實測</text>
+    </g>
+    <g stroke="#24324a" stroke-width="3" fill="none" marker-end="url(#arr)">
+      <path d="M136 112 L160 112"/><path d="M306 112 L330 112"/><path d="M476 112 L500 112"/><path d="M636 112 L660 112"/><path d="M796 112 L820 112"/><path d="M956 112 L980 112"/>
+    </g>
+    <g stroke="#d64848" stroke-width="3" fill="none" stroke-dasharray="6 7" marker-end="url(#arr)">
+      <path d="M569 146 Q490 230 404 148"/>
+      <path d="M556 78 Q400 0 240 76"/>
+      <path d="M889 146 Q810 230 729 148"/>
+    </g>
+    <g font-size="15" fill="#d64848" text-anchor="middle"><text x="486" y="226">引用錯了 → 重寫</text><text x="398" y="22">缺資料 → 回去補</text><text x="810" y="226">說得比 Wiki 多 → 重做</text></g>
+  </svg>
+  <div class="row" style="margin-top:4px">
+    <div class="card"><div class="latin" style="font-size:40px;color:var(--orange);line-height:1">8</div><p class="small">篇資料 ingest（含 1 次回頭補資料）</p></div>
+    <div class="card"><div class="latin" style="font-size:40px;color:var(--orange);line-height:1">9</div><p class="small">個 Wiki 頁面，每句都標來源</p></div>
+    <div class="card"><div class="latin" style="font-size:40px;color:var(--orange);line-height:1">2</div><p class="small">個獨立檢查者：Wiki Lint、簡報檢查</p></div>
+  </div>
+  <div class="src">📒 <b>process/02-loop-graph設計.md</b>　模型：Claude Opus 5.5（主流程）＋ Claude Sonnet（子代理）</div>
+  <div class="pg">18</div>
+</section>
+
+<!-- 19 參考資料 -->
+<section class="slide" data-wiki="index.md">
+  <div class="tape a"></div>
+  <h2>參考資料</h2><div class="dots"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+  <ul style="list-style:none;font-family:var(--sans);display:grid;gap:7px">
+    <li class="small"><b>S01</b>　Apex Legends Wiki — Movement（apexlegends.wiki.gg）</li>
+    <li class="small"><b>S02</b>　EA 官方 patch notes（Overclocked、Cipher）／PC Gamer（2021 延後報導）</li>
+    <li class="small"><b>S03</b>　Dexerto — What is tap strafing in Apex Legends?（2023-11）</li>
+    <li class="small"><b>S04</b>　The Spike — How to tap strafe in Apex Legends（2025-09 更新）</li>
+    <li class="small"><b>S05</b>　Setup.gg — How to Super Glide（2024-01）／DBLTAP（2022-04）</li>
+    <li class="small"><b>S06</b>　GGRecon — Advanced Movement Guide／Charlie INTEL — Movement tips（2021-04）</li>
+    <li class="small"><b>S07</b>　PCGamesN／GameRant — Season 23 Tap Strafe 緩衝與撤回（2025-01）</li>
+    <li class="small"><b>S08</b>　Charlie INTEL／MeinMMO／wiki.gg Skydive — 滑鏟跳與兔子跳</li>
+  </ul>
+  <p class="small" style="margin-top:16px">所有內容都經 Wiki 改寫整理、每個事實都標了來源；完整網址在 Wiki 的 <b>index.md</b> 與 <b>raw/</b> 資料夾。</p>
+  <div class="src">📒 <b>index.md</b></div>
+  <div class="pg">19</div>
+</section>
+
+</div></div>
+
+<nav class="nav" aria-label="投影片導覽">
+  <button id="prev" aria-label="上一張">‹</button>
+  <div class="pips" id="pips"></div>
+  <button id="next" aria-label="下一張">›</button>
+</nav>
+
+<script>
+(function(){
+  const stage=document.getElementById('stage');
+  const slides=[...stage.querySelectorAll('.slide')];
+  const pips=document.getElementById('pips');
+  const mq=window.matchMedia('(max-width:760px)');
+  let i=0;
+  slides.forEach((_,k)=>{const d=document.createElement('i');d.title=(k+1)+'';d.onclick=()=>go(k);pips.appendChild(d);});
+  try{const h=parseInt(location.hash.slice(1),10);if(h>=1&&h<=slides.length)i=h-1;}catch(e){}
+  function fit(){
+    if(mq.matches){stage.style.transform='none';return;}
+    const s=Math.min(window.innerWidth/1340,(window.innerHeight-70)/760);
+    stage.style.transform='translate(-50%,-50%) scale('+s+')';
+  }
+  function go(n){
+    i=Math.max(0,Math.min(slides.length-1,n));
+    slides.forEach((s,k)=>s.classList.toggle('active',k===i));
+    [...pips.children].forEach((p,k)=>p.classList.toggle('on',k===i));
+    try{history.replaceState(null,'','#'+(i+1));}catch(e){}
+  }
+  document.getElementById('prev').onclick=()=>go(i-1);
+  document.getElementById('next').onclick=()=>go(i+1);
+  document.addEventListener('keydown',e=>{
+    const q=e.target.closest&&e.target.closest('.quiz');
+    if(q&&(e.key==='Enter'||e.key===' ')){e.preventDefault();q.classList.toggle('open');return;}
+    if(mq.matches)return;
+    if(['ArrowRight','PageDown',' '].includes(e.key)){e.preventDefault();go(i+1);}
+    if(['ArrowLeft','PageUp'].includes(e.key)){e.preventDefault();go(i-1);}
+    if(e.key==='Home')go(0); if(e.key==='End')go(slides.length-1);
+  });
+  let x0=null;
+  document.addEventListener('touchstart',e=>{x0=e.touches[0].clientX;},{passive:true});
+  document.addEventListener('touchend',e=>{if(x0===null||mq.matches)return;const dx=e.changedTouches[0].clientX-x0;if(Math.abs(dx)>60)go(dx<0?i+1:i-1);x0=null;});
+  document.querySelectorAll('.quiz').forEach(q=>q.addEventListener('click',()=>q.classList.toggle('open')));
+  window.addEventListener('resize',fit);
+  if(mq.addEventListener)mq.addEventListener('change',fit);
+  fit();go(i);
+})();
+</script>
+</body>
+</html>
